@@ -4,12 +4,14 @@ import { useLocation } from 'react-router-dom'
 import { selectCenter, selectCompany, setCenter, setCompany } from './companyAndCenterSelectionSlice'
 import { useAppDispatch, useAppSelector } from 'src/app/hooks'
 import {
-  selectCustomStyles,
+  getStyles,
   SelectLoading,
   selectThemeConfig,
 } from 'src/features/utils/ReusableElements/ReactSelect/ReactSelect'
 import { SelectOption } from 'src/features/types'
 import { useUser } from 'src/features/services/api/authApi/useUser'
+import { RootState } from 'src/app/store'
+import { useSelector } from 'react-redux'
 
 function CompanyAndCenterSelection() {
   const dispatch = useAppDispatch()
@@ -161,6 +163,8 @@ function CompanyAndCenterSelection() {
     selectedCompanyOption,
     isSuperAdmin,
   ])
+  const theme = useSelector((state:RootState)=>state.themeCustomizer.mix_background_layout);
+  let customSyle = getStyles(theme);
 
   return (
     <>
@@ -168,7 +172,7 @@ function CompanyAndCenterSelection() {
         {shouldShowCompaniesDropdown && (
           <div className="me-3 mb-2 mb-sm-0" style={dropdownStyle}>
             <Select
-              styles={selectCustomStyles as any}
+              styles={customSyle as any}
               theme={selectThemeConfig}
               loadingMessage={SelectLoading}
               isLoading={isFetchingCompanies}
@@ -188,7 +192,7 @@ function CompanyAndCenterSelection() {
         {shouldShowCentersDropdown && (
           <div style={dropdownStyle}>
             <Select
-              styles={selectCustomStyles}
+              styles={customSyle}
               theme={selectThemeConfig}
               loadingMessage={SelectLoading}
               isLoading={isFetchingCenters}

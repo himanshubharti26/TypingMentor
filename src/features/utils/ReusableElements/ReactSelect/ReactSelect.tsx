@@ -4,6 +4,22 @@ import { SelectOption } from 'src/features/types'
 
 export const SelectLoading = () => <Spinner className="my-5" />
 
+export const getStyles = (theme:string)=>{
+ 
+  return {
+    ...selectCustomStyles,
+    control: (styles:any) => ({
+      ...styles,
+      backgroundColor:theme==="light-only"||theme===""?"white":"#0f2642",
+      color: theme==="dark-only"?"white":"",
+    }),
+    menu:(styles:any)=>({
+      ...styles,
+      backgroundColor:theme==="light-only"||theme===""?"white":"#0f2642",
+    })
+  }
+}
+
 export const selectCustomStyles: StylesConfig<SelectOption, false, GroupBase<SelectOption>> = {
   control: (styles) => ({
     ...styles,
