@@ -35,10 +35,14 @@ export const accountApi = createApi({
         }
       },
       invalidatesTags: ['Account'],
-
-      async onQueryStarted(_args, { queryFulfilled }) {
+      async onQueryStarted(_args, {dispatch, queryFulfilled }) {
+        dispatch(accountApi.util.updateQueryData("getAccount", undefined,(draft)=>{
+           Object.assign(draft, _args);
+        })
+        )
         handleOnQueryStartedWithToast(queryFulfilled, { action: 'update' })
       },
+      
     }),
 
     changeAccountPassword: builder.mutation<
